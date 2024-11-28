@@ -11,11 +11,13 @@ public class ImpostorScript : MonoBehaviour
     [SerializeField]
     private float timer;
     [SerializeField]
+    public PointScript pScript;
 
     void Start()
     {
         speed = Random.Range(10f, 15f);
         vent = GameObject.FindGameObjectWithTag("Objective");
+        pScript = FindObjectOfType<PointScript>();
     }
 
     void Update()
@@ -29,6 +31,7 @@ public class ImpostorScript : MonoBehaviour
         if (collision.gameObject.name == "Vent Objective")
         {
             Debug.Log("You Should have lost here, but since this is a test it doesn't matter");
+            pScript.HP -= 10;
             Destroy(gameObject);
         }
     }
@@ -38,6 +41,7 @@ public class ImpostorScript : MonoBehaviour
         Vector3 relativepos = vent.transform.position - transform.position;
         Quaternion rotation = Quaternion.LookRotation(relativepos, Vector3.up);
         transform.rotation = rotation;
+
     }
 
     void MoveImpostor()

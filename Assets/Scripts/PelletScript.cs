@@ -8,11 +8,12 @@ public class PelletScript : MonoBehaviour
     [SerializeField]
     private Transform target;
     [SerializeField]
-    public float speed = 60f;
+    public float speed = 2f;
+    public float timer;
 
     void Start()
     {
-        points = GetComponent<PointScript>();
+        points = FindObjectOfType<PointScript>();
     }
 
     void Update()
@@ -24,11 +25,6 @@ public class PelletScript : MonoBehaviour
         }
 
         MoveBullet();
-    }
-
-    private void OnDestroy()
-    {
-
     }
 
     public void Attack(Transform _target)
@@ -47,7 +43,10 @@ public class PelletScript : MonoBehaviour
             return;
         }
 
-        transform.Translate(direction.normalized * constSpeed, Space.World);
+        timer += Time.deltaTime;
+        float divider = timer * speed / speed;
+        var move = Vector3.Lerp(transform.position, target.position, divider);
+        transform.position = move;
     }
 
     public void HitTarget()

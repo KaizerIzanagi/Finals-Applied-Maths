@@ -10,14 +10,16 @@ public class EnemyGenerator : MonoBehaviour
     [SerializeField]
     public int xPos;
     public int zPos;
-    public int impostorCount, waveCount;
-    public float spawnTimer, spawnTick, minSpawnTick;
+    public int waveCount;
+    public float waveTimer;
+    public float spawnTimer, spawnTick, minSpawnTick, spawnTickReducer;
+    
 
     private void Start()
     {
-        spawnTick = 5;
-        impostorCount = 10;
-        minSpawnTick = 0.3f;
+        spawnTick = 4f;
+        spawnTickReducer = 0.1f;
+        minSpawnTick = 0.15f;
     }
 
     private void Update()
@@ -28,7 +30,7 @@ public class EnemyGenerator : MonoBehaviour
         {
             StartCoroutine(ImpostorSpawn());
             spawnTimer = 0;
-            spawnTick = spawnTick - 0.50f;
+            spawnTick = spawnTick - spawnTickReducer;
         }
 
         if (spawnTick < minSpawnTick)
@@ -36,7 +38,9 @@ public class EnemyGenerator : MonoBehaviour
             spawnTick = minSpawnTick;
         }
 
+        WaveScript();
     }
+
     IEnumerator ImpostorSpawn()
     {
         xPos = Random.Range(-48, 48);
@@ -58,5 +62,22 @@ public class EnemyGenerator : MonoBehaviour
 
     }
 
-    
+    public void WaveScript()
+    {
+        waveTimer += Time.deltaTime;
+
+        if (waveTimer > 60f)
+        {
+            waveCount++;
+            waveTimer = 0;
+            spawnTick = 4;
+            spawnTickReducer = spawnTickReducer + 0.1f;
+            if (spawnTickReducer < minSpawnTick)
+            {
+                spawnTickReducer = 3.9f;
+            }
+        }
+
+    }
+
 }

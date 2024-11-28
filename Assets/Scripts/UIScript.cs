@@ -1,18 +1,40 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIScript : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject TitleScreen, MainGame, Upgrade, GameOver;
+    public GameObject enemySpawner, turrets;
     void Start()
     {
-        
+        TitleScreen.SetActive(true);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void StartGame()
     {
-        
+        MainGame.SetActive(true);
+        TitleScreen.SetActive(false);
+        enemySpawner.SetActive(true);
+        turrets.SetActive(true);
     }
+
+    public void UpgradeMenu()
+    {
+        Upgrade.SetActive(true);
+        MainGame.SetActive(false);
+    }
+
+    public void BackButton()
+    {
+        Upgrade.SetActive(false);
+        MainGame.SetActive(true);
+    }
+
+    public void Retry()
+    {
+        MainGame.SetActive(true);
+    }
+    
 }

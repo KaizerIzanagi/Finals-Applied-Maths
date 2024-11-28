@@ -11,6 +11,7 @@ public class TurretScript : MonoBehaviour
     private Transform target;
     public string impostorTag = "Sus";
     public Transform rotateTurret;
+    public Vector3 crossProduct;
     [SerializeField]
     [Header("Changable Fields")]
     public float rotationSpeed;
@@ -47,6 +48,13 @@ public class TurretScript : MonoBehaviour
 
     void LookRotation()
     {
+        //Vector3 basePos = target.position - transform.position;
+        //Vector3 targetPos = Vector3.left - target.position;
+
+        //Vector3 relativepos = Vector3.Cross(basePos, targetPos).normalized;
+
+        //crossProduct = relativepos;
+
         Vector3 relativepos = target.position - transform.position;
         Quaternion lookrotation = Quaternion.LookRotation(-relativepos);
         Vector3 rotation = Quaternion.Lerp(rotateTurret.rotation, lookrotation, Time.deltaTime * rotationSpeed).eulerAngles;
@@ -93,11 +101,4 @@ public class TurretScript : MonoBehaviour
 
     }
 
-    /*
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(transform.position, range);
-    }
-    */
 }
