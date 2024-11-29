@@ -17,17 +17,19 @@ public class PointScript : MonoBehaviour
         MaxHP = 100;
         HP = MaxHP;
         Cash = 0;
-        turret = FindObjectOfType<UpgradeScript>();
+        ui = GetComponent<UIScript>();
     }
 
     
     void Update()
     {
+        turret = FindAnyObjectByType<UpgradeScript>();
         if (HP <= 0) 
         {
             turret.ImpostorsWon();
-            turret.turrets.SetActive(false);
-            Cash = 0;
+            ui.enemySpawner.SetActive(false);
+            ui.GameOver.SetActive(true);
+            ui.gameOverT.text = "The Impostors Won. You have Survived " + spawner.waveCount.ToString() + " rounds.";
         }
     }
 }

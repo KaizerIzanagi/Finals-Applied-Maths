@@ -8,6 +8,7 @@ TagManager:
   - Objective
   - RedBullet
   - Turret
+  - EnemySpawner
   layers:
   - Default
   - TransparentFX

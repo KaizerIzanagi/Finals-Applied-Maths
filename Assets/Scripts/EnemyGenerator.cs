@@ -13,6 +13,7 @@ public class EnemyGenerator : MonoBehaviour
     public int waveCount;
     public float waveTimer;
     public float spawnTimer, spawnTick, minSpawnTick, spawnTickReducer;
+    public float gameStart;
     
 
     private void Start()
@@ -20,25 +21,30 @@ public class EnemyGenerator : MonoBehaviour
         spawnTick = 4f;
         spawnTickReducer = 0.1f;
         minSpawnTick = 0.15f;
+        gameStart = 0;
     }
 
     private void Update()
     {
-        spawnTimer += Time.deltaTime;
-
-        if (spawnTimer >= spawnTick)
+        if (gameStart == 1)
         {
-            StartCoroutine(ImpostorSpawn());
-            spawnTimer = 0;
-            spawnTick = spawnTick - spawnTickReducer;
-        }
+            spawnTimer += Time.deltaTime;
 
-        if (spawnTick < minSpawnTick)
-        {
-            spawnTick = minSpawnTick;
-        }
+            if (spawnTimer >= spawnTick)
+            {
+                StartCoroutine(ImpostorSpawn());
+                spawnTimer = 0;
+                spawnTick = spawnTick - spawnTickReducer;
+            }
 
-        WaveScript();
+            if (spawnTick < minSpawnTick)
+            {
+                spawnTick = minSpawnTick;
+            }
+
+            WaveScript();
+        }
+        
     }
 
     IEnumerator ImpostorSpawn()
